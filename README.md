@@ -1,4 +1,5 @@
-# `miol-reng-tools` - Tools for Reverse Engineering Multifocal Intraocular Lenses
+# miol-reng-tools
+## Tools for Reverse Engineering Multifocal Intraocular Lenses
 
 This is the repository of the project *Reverse Engineering of Multifocal Intraocular Lenses Using a Conventional Confocal Microscope* that was conducted as research seminar at the TH Köln in WS 2020/21.
 
