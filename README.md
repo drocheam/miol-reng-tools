@@ -17,6 +17,6 @@ Element | Function
 `Code\ShowProfiles.py` |  Show generated profiles
 
 ### Required packages:
-`copy, matplotlib, numpy, scipy, struct, os`
+`copy, matplotlib, numpy, PyQt5, scipy, struct, os`
 
-Tested with Python 3.8 and PyCharm 2020.3.2
+Tested with Python 3.8, PyCharm 2020.3.2 and Spyder 4.2.1
