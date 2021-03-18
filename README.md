@@ -1,7 +1,7 @@
 # miol-reng-tools
 ## Tools for Reverse Engineering Multifocal Intraocular Lenses
 
-This is the repository of the project *Reverse Engineering of Multifocal Intraocular Lenses Using a Conventional Confocal Microscope* that was conducted as research seminar at the TH Köln in WS 2020/21.
+This is the repository of the project *Reverse Engineering of Multifocal Intraocular Lenses Using a Confocal Microscope* that was conducted as research seminar at the TH Köln in WS 2020/21.
 
 Details can be found in the paper included in the repository.
 
