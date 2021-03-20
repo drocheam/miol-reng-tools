@@ -3,18 +3,20 @@
 
 This is the repository of the project *Reverse Engineering of Multifocal Intraocular Lenses Using a Confocal Microscope* that was conducted as research seminar at the TH Köln in WS 2020/21.
 
-Details can be found in the paper included in the repository.
+Details can be found in the [paper](https://github.com/drocheam/miol-reng-tools/blob/main/Paper.pdf) included in the repository.
 
 ### Structure
 
 Element | Function
 ------------ | -------------
-`Measurements\` | measurement data and processing parameters
-`Code\lib\` | implemented library package
+`Measurements\` | Measurement data and processing parameters
+`Code\lib\` | Implemented library package
 `Code\GenerateProfiles.py` | Generate surface profiles from a measurement
 `Code\EstimateThickness.py` | Measure lens edge thickness
-`Code\CompareStitching.py` | Compare different stitching methods on a measurment
+`Code\CompareStitching.py` | Compare different stitching methods on a measurement
 `Code\ShowProfiles.py` |  Show generated profiles
+
+The project includes functions from [musurf-reader](https://github.com/drocheam/musurf-reader).
 
 ### Required packages:
 `copy, matplotlib, numpy, PyQt5, scipy, struct, os`
