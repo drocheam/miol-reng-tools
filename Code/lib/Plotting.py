@@ -1,22 +1,25 @@
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
-import PyQt5 # for plotting backend
+import PyQt5 # for plotting backend Qt5Agg
 from lib.Interpolation import interp2f
 
 """
-Plotting functions used throughout the library and scripts
+Plotting functions
 
 """
 
+# enforce plotting backend to show plots interactive and in separate windows
 matplotlib.use('Qt5Agg')
 
-# fonts to make everything look more professional
+# better fonts to make everything look more professional
 matplotlib.rcParams['mathtext.fontset'] = 'stix'
 matplotlib.rcParams['font.family'] = 'STIXGeneral'
+
+# raise window to front when showing plot
 matplotlib.rcParams['figure.raise_window'] = True
 
-# figure size
+# set figure size
 fsize = (9, 7)
 
 
@@ -26,7 +29,6 @@ fsize = (9, 7)
 #matplotlib.rcParams["figure.subplot.right"] = 0.97
 #matplotlib.rcParams["figure.subplot.left"] = 0.112
 #fsize = (6, 2.8)
-
 
 # parameters for poster output
 #matplotlib.rcParams["figure.subplot.bottom"] = 0.19
@@ -53,7 +55,7 @@ def LensPlot(x, y, h_data_in, blocking=True):
     :param x: x coordinate vector (1D array)
     :param y: y coordinate vector (1D array)
     :param h_data_in: z values (2D array)
-    :param blocking: if the pyplot plot pauses further program execution (bool)
+    :param blocking: if pyplot pauses further program execution (bool)
     """
 
     h_data = np.flipud(h_data_in) # flip so (0,0) is in lower left corner
@@ -91,7 +93,7 @@ def DiffLensPlot(x, y, h_data_in, S=dict(), blocking=True):
     :param y: y coordinate vector (1D array)
     :param h_data_in: z values (2D array)
     :param S: (optional): lens property struct: xm, ym Coordinates of Lens Axis, r1 Radius of Aid Circle, r2 Lens Radius
-    :param blocking: if the pyplot plot pauses further program execution (bool)
+    :param blocking: if pyplot pauses further program execution (bool)
     """
 
     h_data = np.flipud(h_data_in) # flip so (0,0) is in lower left corner
@@ -151,7 +153,7 @@ def ComparisonPlot(x, y1, y2, blocking=True, title="Height Profile Variation"):
     :param x: ordinate vector for both profiles (1D array)
     :param y1: profile dataset 1 with the profiles in rows (2D array)
     :param y2: profile dataset 2 with the profiles in rows (2D array)
-    :param blocking: if the pyplot plot pauses further program execution (bool, defaults to true)
+    :param blocking: if pyplot pauses further program execution (bool, defaults to true)
     :param title: title for the plot (string)
     """
 
@@ -192,7 +194,7 @@ def ProfilePlot(r, profs, legentries=[], title="Height Profile", blocking=True):
     :param profs: profiles, either as tuple of 1D arrays (for multiple profiles) or as one 1D array (for one profile)
     :param legentries: legend entry list for legend() function (list of strings)
     :param title: title for the plot (string, has a default value
-    :param blocking: if the pyplot plot pauses further program execution (bool, defaults to true)
+    :param blocking: if pyplot pauses further program execution (bool, defaults to true)
     """
 
     plt.figure(figsize=fsize)
@@ -233,7 +235,7 @@ def ThicknessPlot(x, y, h_data_in, T, blocking=True):
     :param h_data_in: z values (2D array)
     :param T: (optional): lines adjustment 1D array, containing coordinates of a point A and B opposite
                 of each other at the lens edge: [Ax, Ay, Bx, By]
-    :param blocking: if pyplot video pauses further program execution (bool)
+    :param blocking: if pyplot pauses further program execution (bool)
     :return: edge thickness (numpy float)
     """
 
@@ -320,7 +322,7 @@ def interpolationPlot(r, org, interpolated, blocking=True):
     :param r: r vector (1D array)
     :param org: original profile (1D array)
     :param interpolated: interpolated profile (1D array)
-    :param blocking: if the pyplot plot pauses further program execution (bool, defaults to true)
+    :param blocking: if pyplot pauses further program execution (bool, defaults to true)
     """
 
     plt.figure(figsize=(9, 7))
@@ -349,7 +351,7 @@ def FilteredProfilePlot(r, org, filtered, diff2, diff2_filtered, F, blocking=Tru
     :param diff2: unfiltered abs of second derivative (both 1D arrays)
     :param diff2_filtered: filtered abs of second derivative (both 1D arrays)
     :param F: filter property dictionary, see filterProfile() for more details
-    :param blocking: if the pyplot plot pauses further program execution (bool, defaults to true)
+    :param blocking: if pyplot pauses further program execution (bool, defaults to true)
     """
 
     # original and filter plot
