@@ -1,6 +1,25 @@
 from lib import *
 import numpy as np
 
+"""
+Generate a mathematical representation of a lens profile using a confocal lens measurement.
+Processing includes: Centering, alignment, interpolation, filtering and parameter regression.
+The output of this script is a numpy archive (.npz) that holds the radius vector, 
+parameters for the refractive base part as well as filtered data of the diffractive part (both 1 dimensional)
+
+User Interaction:
+1. Chose stiching method
+2. Depending on stitching method specify path to nms or sms and smi file
+3. Lens plot
+4. Specify lens center and lens diameter using the setLensProperties() Interface
+5. Plots of conic section, polynomials and diffractive part
+6. Specify if polynomials and diffractive parts will be excluded
+7. if diffractive part included: do for both lens surface sides:
+a) set interpolation regions for diffractive profile
+b) set filtering parameters for diffractive profile (setFiltering() Interface)
+8. set saving path for output .npz archive
+"""
+
 
 def GenerateProfiles(x=None, y=None, h_data=None):
     """
@@ -106,5 +125,6 @@ def GenerateProfiles(x=None, y=None, h_data=None):
     saveData(path, "Profile", savdict)
 
 
+# execute function when called as main file
 if __name__ == "__main__":
     GenerateProfiles()

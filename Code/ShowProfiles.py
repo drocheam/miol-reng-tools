@@ -1,5 +1,16 @@
 from lib import *
 
+"""
+Visualizes processed diffractive MIOL data from a .npz archive.
+.npz archive needs to include all data generated from function GenerateProfiles()
+
+Plot of the conic section, polynomials and diffractive profiles are shown,
+as well as profile information.
+
+User Interaction:
+1. Enter Path to .npz archive
+2. Profile plots
+"""
 
 def ShowProfiles(path=None):
     """
@@ -33,5 +44,6 @@ def ShowProfiles(path=None):
         ProfilePlot(S1['r'], (S1['diff1'], S1['diff2']), legentries=legend3, blocking=True)
 
 
+# execute function when called as main file
 if __name__ == "__main__":
     ShowProfiles()

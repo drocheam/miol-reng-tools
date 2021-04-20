@@ -1,5 +1,16 @@
 from lib import *
 
+"""
+Estimate the lens edge thickness using a measurement and user inputs.
+
+User Interaction:
+1. Specify .nms measurement file path
+2. Do until satisfactory results are achieved:
+a) user inputs edge lines (more details shown on execution) so they overlay with the edges
+b) edge profile and thickness plots
+3. Thickness is displayed
+"""
+
 
 def ThicknessEstimation(x=None, y=None, h_data=None):
     """
@@ -22,6 +33,6 @@ def ThicknessEstimation(x=None, y=None, h_data=None):
           "and there is no slope towards the lens centre)")
 
 
-
+# execute function when called as main file
 if __name__ == "__main__":
     ThicknessEstimation()
