@@ -1,5 +1,8 @@
 from lib import *
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
+
 """
 Processes a measurement and shows results for every available stitching method.
 

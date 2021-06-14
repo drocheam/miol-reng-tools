@@ -1,5 +1,8 @@
 from lib import *
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
+
 """
 Visualizes processed diffractive MIOL data from a .npz archive.
 .npz archive needs to include all data generated from function GenerateProfiles()

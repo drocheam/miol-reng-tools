@@ -1,6 +1,9 @@
 from lib import *
 import numpy as np
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
+
 """
 Generate a mathematical representation of a lens profile using a confocal lens measurement.
 Processing includes: Centering, alignment, interpolation, filtering and parameter regression.
