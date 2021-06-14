@@ -3,6 +3,8 @@ from lib.Fitting import *
 import numpy as np
 from scipy import interpolate
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
 
 """
 Methods for geometrical manipulation and information on the lens

@@ -4,6 +4,10 @@ import numpy as np
 import PyQt5 # for plotting backend Qt5Agg
 from lib.Interpolation import interp2f
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
+
+
 """
 Plotting functions
 

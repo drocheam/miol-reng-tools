@@ -1,3 +1,5 @@
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
 
 """
 this file is needed to create a python package and is executed when the package is loaded

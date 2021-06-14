@@ -1,6 +1,8 @@
 import struct
 import numpy as np
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/musurf-reader
 
 """
 Functions for importing files of the nanofocus usurf microscope

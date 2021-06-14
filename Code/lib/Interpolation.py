@@ -1,6 +1,9 @@
 import numpy as np
 from scipy import interpolate
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
+
 """
 Interpolation functions (1D and 2D)
 

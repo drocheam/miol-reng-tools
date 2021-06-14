@@ -1,5 +1,8 @@
 import numpy as np
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
+
 """
 Functions for curve regression and fitting (1D)
 

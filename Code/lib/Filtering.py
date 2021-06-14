@@ -2,6 +2,8 @@ from lib.Fitting import *
 import numpy as np
 from scipy.ndimage import gaussian_filter1d as gaussFilter
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
 
 """
 Filtering methods

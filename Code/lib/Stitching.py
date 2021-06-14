@@ -4,6 +4,9 @@ import numpy as np
 from matplotlib import pyplot as plt
 from lib.Interpolation import interpolateNan
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
+
 """
 Methods for alternative stitching compared to that of nanofocus
 shift detection needed because stepper motor used for displacement between images is open loop

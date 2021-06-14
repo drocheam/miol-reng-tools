@@ -1,6 +1,9 @@
 import numpy as np
 from lib import musurf_reader as ur
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
+
 """
 Import functions using usurf_reader lib
 

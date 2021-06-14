@@ -4,6 +4,8 @@ from lib.Interpolation import interpolateProfile
 import numpy as np
 import os.path
 
+# Author: Damian Mendroch,
+# Project repository: https://github.com/drocheam/miol-reng-tools
 
 """
 Interface functions.
