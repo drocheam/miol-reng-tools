@@ -5,6 +5,9 @@ This is the repository of the project *Reverse Engineering of Multifocal Intraoc
 
 Details can be found in the [paper](https://github.com/drocheam/miol-reng-tools/blob/main/Paper.pdf) included in the repository.
 
+### Screenshots
+ <img src="https://github.com/drocheam/miol-reng-tools/blob/main/Screenshot2.png" height="220">  <img src="https://github.com/drocheam/miol-reng-tools/blob/main/Screenshot1.png" height="220">  
+
 ### Structure
 
 Element | Function
@@ -17,6 +20,7 @@ Element | Function
 `Code\ShowProfiles.py` |  Show generated profiles
 
 The project includes functions from [musurf-reader](https://github.com/drocheam/musurf-reader).
+<br></br>
 
 ### Required packages:
 `copy, matplotlib, numpy, PyQt5, scipy, struct, os`
