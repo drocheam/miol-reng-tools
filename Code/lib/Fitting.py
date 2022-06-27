@@ -15,7 +15,7 @@ Supported:
 The implementations for Cone Section and Circle uses linear methods for regression,
 this is done by writing the fitting functions as a system of linear equation with unknowns, from which the actual
 desired unknowns can be determined. The overdetermined equation system is solved using the QR method, this leads to
-a least square solution for the paramaters.
+a least square solution for the parameters.
 See ConicSectionRegression() for an example.
 
 Compared to universal methods like gradient descent, this algortihm is much faster, needs no starting values
@@ -23,7 +23,7 @@ and is not susceptible for landing in a local minimum.
 """
 
 
-def ConicSection(r, z0, p, k):
+def ConicSection(r: np.ndarray, z0: float, p: float, k: float) -> np.ndarray:
     """
     calculate the conic section curve (formula according to DIN ISO 10110 with additional offset z0)
 
@@ -36,7 +36,7 @@ def ConicSection(r, z0, p, k):
     return z0 + p*r**2 / (1 + np.sqrt(1 - (1+k)*(p*r)**2))
 
 
-def ConicSectionDerivative(r, z0, p, k):
+def ConicSectionDerivative(r: np.ndarray, z0: float, p: float, k: float) -> np.ndarray:
     """
     calculate the derivative of a conic section
 
@@ -49,7 +49,7 @@ def ConicSectionDerivative(r, z0, p, k):
     return p*r / np.sqrt(1 - (1+k)*(p*r)**2)
 
 
-def ConicSectionCircle(r, z0, p, k):
+def ConicSectionCircle(r: np.ndarray, z0: float, p: float, k: float) -> np.ndarray:
     """
     calculate the inner curvature circle of a conic section (corresponds to the conic sections with k=0)
 
@@ -62,8 +62,7 @@ def ConicSectionCircle(r, z0, p, k):
     return ConicSection(r, z0, p, k=0)
 
 
-
-def ConicSectionRegression(r, z, cp=1):
+def ConicSectionRegression(r: np.ndarray, z: np.ndarray, cp: float=1.) -> tuple[float, float, float]:
     """
     calculate conic section regression
     cp specifies which lower fraction of r and z to use,
@@ -99,12 +98,12 @@ def ConicSectionRegression(r, z, cp=1):
 
     # solve overdetermined equation system using QR method
     Q, R = np.linalg.qr(A)
-    X = np.linalg.inv(R) @ Q.T @ b # X = R^-1 * Q^T * b
+    X = np.linalg.inv(R) @ Q.T @ b  # X = R^-1 * Q^T * b
 
     # case k = -1 (corresponds to X[1] = 0)
     if np.abs(X[0]) < np.finfo(float).eps * 5:
         # pole X[1] = 0 ignored, because it would equal 1/p = 0 for k = -1 and therefore an infinitesimal body
-        return X[2]/X[1]/2, 1/X[1], -1.0 # return z0, p, k
+        return X[2]/X[1]/2, 1/X[1], -1.0  # return z0, p, k
 
     # typical case
     # pole X[1] - z0 * X[0] = 0 is ignored, because it would equal 1/p = 0 and therefore an infinitesimal body
@@ -124,7 +123,7 @@ def ConicSectionRegression(r, z, cp=1):
     return z02, p2, k
 
 
-def Circle(r, z0, R, sign):
+def Circle(r: np.ndarray, z0: float, R: float, sign: int=1) -> np.ndarray:
     """
     calculate circle curve
 
@@ -137,7 +136,7 @@ def Circle(r, z0, R, sign):
     return sign*np.sqrt(R**2 - r**2) + z0
 
 
-def CircleDerivative(r, z0, R, sign):
+def CircleDerivative(r: np.ndarray, z0: float, R: float, sign: int=1) -> np.ndarray:
     """
     calculate circle derivative curve
 
@@ -150,7 +149,7 @@ def CircleDerivative(r, z0, R, sign):
     return -sign*r/np.sqrt(R**2 - r**2)
 
 
-def CircleRegression(r, z, cp=1):
+def CircleRegression(r: np.ndarray, z: np.ndarray, cp: float=1) -> tuple[float, float, float]:
     """
     calculate circle regression
     cp specifies which lower fraction of r and z to use, this can be helpful if the curve deviates
@@ -177,7 +176,7 @@ def CircleRegression(r, z, cp=1):
 
     # solve overdetermined equation system using the QR Algorithm
     Q, R = np.linalg.qr(A)
-    X = np.linalg.inv(R) @ Q.T @ b # X = R^-1 * Q^T * b
+    X = np.linalg.inv(R) @ Q.T @ b  # X = R^-1 * Q^T * b
 
     # calculate Parameters
     z0 = X[0]
@@ -192,7 +191,7 @@ def CircleRegression(r, z, cp=1):
     return z0, R, -1
 
 
-def Poly(x, a):
+def Poly(x: np.ndarray, a: np.ndarray) -> np.ndarray:
     """
     calculate polynomial values from coefficients
 
@@ -204,7 +203,7 @@ def Poly(x, a):
     return poly(x)
 
 
-def PolyDerivative(x, a):
+def PolyDerivative(x: np.ndarray, a: np.ndarray) -> np.ndarray:
     """
     calculate derivative of polynomial from coefficients
 
@@ -216,7 +215,7 @@ def PolyDerivative(x, a):
     return der(x)
 
 
-def PolyRegression(x, y, order=8):
+def PolyRegression(x: np.ndarray, y: np.ndarray, order: int=8) -> np.ndarray:
     """
     calculate polynomial regression for specified order
 
@@ -228,7 +227,7 @@ def PolyRegression(x, y, order=8):
     return np.polyfit(x, y, order)
 
 
-def SymPolyRegression(x, y, order=8):
+def SymPolyRegression(x: np.ndarray, y: np.ndarray, order: int=8) -> np.ndarray:
     """
     calculate regression for even-only polynomials
 
@@ -238,11 +237,12 @@ def SymPolyRegression(x, y, order=8):
     :return: coefficients in reverse order with odd ones being zero (1D numpy array)
     """
     # add mirrored data to enforce symmetrical polynomial fitting
-    mask = x > 0 # exclude x = 0 in mask, because it would arise twice in x_s
+    mask = x > 0  # exclude x = 0 in mask, because it would arise twice in x_s
     x_s = np.concatenate((-np.flip(x[mask]), x[mask]))
     y_s = np.concatenate((np.flip(y[mask]), y[mask]))
 
-    s = np.polyfit(x_s, y_s, order) # calculate polyfit
-    s[-2::-2] = 0 # set residual asymmetrical polynomial components to zero
+    s = np.polyfit(x_s, y_s, order)  # calculate polyfit
+    s[-2::-2] = 0  # set residual asymmetrical polynomial components to zero
 
     return s
+

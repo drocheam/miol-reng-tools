@@ -1,4 +1,4 @@
-# Author: Damian Mendroch,
+# Author: Damian Mendroch
 # Project repository: https://github.com/drocheam/miol-reng-tools
 
 """
@@ -15,3 +15,4 @@ from lib.Fitting import *
 from lib.Geometry import *
 from lib.Filtering import *
 from lib.Interpolation import *
+

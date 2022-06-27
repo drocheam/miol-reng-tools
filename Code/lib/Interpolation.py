@@ -1,18 +1,18 @@
 import numpy as np
 from scipy import interpolate
 
-# Author: Damian Mendroch,
+# Author: Damian Mendroch
 # Project repository: https://github.com/drocheam/miol-reng-tools
 
 """
 Interpolation functions (1D and 2D)
-
 """
 
 
-# TODO Bug: Remaining "nan islands". Example: h_data with isnan = [[0, 1, 1, 1], [0, 0, 1, 0], [0, 0, 1, 1], [0, 0, 0, 0]]
+# TODO Bug: Remaining "nan islands".
+#  Example: h_data with isnan = [[0, 1, 1, 1], [0, 0, 1, 0], [0, 0, 1, 1], [0, 0, 0, 0]]
 #  creates remaining nan at isnan[3,3]. Execute function multiple times to solve this issue?
-def interpolateNan(h_data):
+def interpolateNan(h_data: np.ndarray) -> np.ndarray:
     """
     2D interpolation of gridded data with missing points (nan values). 2D interpolation of not gridded data
     is extremly slow, so we instead interpolate row and columnwise and use the average of the results at these points.
@@ -30,7 +30,7 @@ def interpolateNan(h_data):
 
     # in x direction
     for n in y:
-        bad_mask_n = ~np.isfinite(h_data[n,:])
+        bad_mask_n = ~np.isfinite(h_data[n, :])
 
         # only interpolate if more than 10 valid data points and there is missing data to interpolate
         if np.count_nonzero(bad_mask_n) > 0 and np.count_nonzero(~bad_mask_n) > 10:
@@ -77,7 +77,7 @@ def interpolateNan(h_data):
     return h_data_ix
 
 
-def interpolateProfile(r, profile, r1, method='linear'):
+def interpolateProfile(r: np.ndarray, profile: np.ndarray, r1: np.ndarray, method: str='linear') -> np.ndarray:
     """
     interpolation of specified ranges, methods of scipy's interp1d are available
 
@@ -124,16 +124,16 @@ def interpolateProfile(r, profile, r1, method='linear'):
     return profile2
 
 
-def interp2f(x, y, z, xp, yp, method='linear'):
+def interp2f(x: np.ndarray, y: np.ndarray, z: np.ndarray, xp: np.ndarray, yp: np.ndarray)\
+        -> np.ndarray:
     """
-    faster 2D interpolation on gridded data with linear or nearest neighbor interpolation
+    faster 2D interpolation on gridded data with linear interpolation
 
     :param x: x coordinate vector (numpy 1D array)
     :param y: y coordinate vector (numpy 1D array)
     :param z: z values (numpy 2D array)
     :param xp: numpy 1D arrays holding the interpolation points x coordinates
     :param yp: numpy 1D arrays holding the interpolation points y coordinates
-    :param method: "linear" or "nearest" (string)
     :return: interpolated values as 1D array
     """
 
@@ -163,25 +163,16 @@ def interp2f(x, y, z, xp, yp, method='linear'):
     xt = (xp - x[0]) / (x[1] - x[0])
     yt = (yp - y[0]) / (y[1] - y[0])
 
-    if method == 'linear':
-        # this part is faster than using np.divmod
-        xc = np.floor(xt).astype(int)
-        yc = np.floor(yt).astype(int)
-        xr = xt - xc
-        yr = yt - yc
+    # this part is faster than using np.divmod
+    xc = np.floor(xt).astype(int)
+    yc = np.floor(yt).astype(int)
+    xr = xt - xc
+    yr = yt - yc
 
-        # save multiply used variables for speedup
-        a = z[yc, xc]
-        b = z[yc+1, xc]
+    # save multiply used variables for speedup
+    a = z[yc, xc]
+    b = z[yc+1, xc]
 
-        # rearranged form with only 4 multiplications for speedup
-        return (1 - yr) * (xr * (z[yc, xc + 1] - a) + a) + yr * (xr * (z[yc + 1, xc + 1] - b) + b)
+    # rearranged form with only 4 multiplications for speedup
+    return (1 - yr) * (xr * (z[yc, xc + 1] - a) + a) + yr * (xr * (z[yc + 1, xc + 1] - b) + b)
 
-    elif method == 'nearest':
-        # fast rounding for positive numbers
-        xc = (xt + 0.5).astype(int)
-        yc = (yt + 0.5).astype(int)
-
-        return z[yc, xc]
-    else:
-        raise Exception("Invalid method")

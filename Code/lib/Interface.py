@@ -3,8 +3,10 @@ from lib.Filtering import filterProfile
 from lib.Interpolation import interpolateProfile
 import numpy as np
 import os.path
+from typing import Callable
+from sys import exit
 
-# Author: Damian Mendroch,
+# Author: Damian Mendroch
 # Project repository: https://github.com/drocheam/miol-reng-tools
 
 """
@@ -15,7 +17,7 @@ type "end" to exit interfaces.
 """
 
 
-def inputLoop(info, A, func, func2=(lambda a: a)):
+def inputLoop(info: str, A: list | dict, func: Callable, func2: Callable=(lambda a: a)) -> tuple[str, dict]:
     """
     asks for input until a valid input is given (specified by lambdas) or input equals "end"
 
@@ -29,8 +31,10 @@ def inputLoop(info, A, func, func2=(lambda a: a)):
     valid = False
     inp = ""
     while valid == False and inp != "end":
+        inp = input(info)
+        if inp == "exit":
+            exit()
         try:
-            inp = input(info)
 
             if inp != "end":
                 A = func2(func(inp))
@@ -41,7 +45,7 @@ def inputLoop(info, A, func, func2=(lambda a: a)):
     return inp, A
 
 
-def inputFilePath(message="Enter path to file: ", ftype="all"):
+def inputFilePath(message: str="Enter path to file: ", ftype: str="all") -> str:
     """
     prompts for a file path and checks if file exists and if the filetype is correct
 
@@ -50,20 +54,22 @@ def inputFilePath(message="Enter path to file: ", ftype="all"):
     :return: valid file path (string)
     """
 
-    while 1 == 1:
+    while 1:
         path = input(message)
         path = path.replace("\"", "")
         ext = os.path.splitext(path)[1]
 
         if ftype != 'all' and ext != ftype:
-            print("Filetype needs to be", ftype)
+            print(f"Filetype needs to be {ftype}")
+
         elif os.path.isfile(path):
             return path
+
         else:
             print("File not Found")
 
 
-def saveData(path, name, tosave):
+def saveData(path: str, name: str, tosave: dict) -> str:
     """
     saves dictionary as npz archive, checks if file exists and asks user if he wants it to be replaced
 
@@ -86,11 +92,11 @@ def saveData(path, name, tosave):
         print("Invalid Input")
 
     np.savez(outpath, **tosave)
-    print("\nSaved Data as ", outpath)
+    print(f"\nSaved Data as {outpath}")
     return outpath
 
 
-def loadData(path):
+def loadData(path: str) -> np.ndarray:
     """
     loads and returns data from .np or .npz archive (string)
 
@@ -100,7 +106,7 @@ def loadData(path):
     return np.load(path)
 
 
-def setLensProperties(x, y, h_data):
+def setLensProperties(x: np.ndarray, y: np.ndarray, h_data: np.ndarray) -> dict:
     """
     Interface for setting the lens properties, the user can adjust the properties mutiple times to his liking
     for each iteration the DiffLensPlot is shown
@@ -124,13 +130,13 @@ def setLensProperties(x, y, h_data):
             print("Exception:", str(e))
 
         func = lambda b: list(map(int, b.strip().split()))[:4]
-        func2 =  lambda a:  dict(xm=a[0], ym=a[1], r1=a[2], r2=a[3])
+        func2 = lambda a:  dict(xm=a[0], ym=a[1], r1=a[2], r2=a[3])
         inp, S = inputLoop("S = xm ym r1 r2: ", S, func, func2)
 
     return S
 
 
-def setInterpolation(r, prof):
+def setInterpolation(r: np.ndarray, prof: np.ndarray) -> tuple[np.ndarray, list]:
     """
     Interface for profile interpolation, the user can set ranges for linear interpolation.
     This whole process is optional. For each iteration the orginal and interpolated data is shown
@@ -159,36 +165,7 @@ def setInterpolation(r, prof):
     return prof_f, I
 
 
-def setThicknessBorders(x, y, h_data):
-    """
-    Interface for determination of the edge thickness. The user aligns lines to the edge borders to determine
-    the diameter.
-
-    :param x: x coordinate vector (1D array)
-    :param y: y coordinate vector (1D array)
-    :param h_data: z values (2D array)
-    :return: edge thickness (float)
-    """
-
-    print("\nSpecify points on the edge lines that lie opposite of each other. Type \"end\" to exit")
-    print("Overlay the edge lines with the lens edge. The thickness will be the orange line in the right plot.")
-
-    T = []
-    inp = ""
-
-    while inp != "end":
-        try:
-            d = ThicknessPlot(x, y, h_data, T)
-        except Exception as e:
-            print("Exception:", str(e))
-
-        func = lambda b: list(map(float, b.strip().split()))[:4]
-        inp, T = inputLoop("Points = x1 y1 x2, y2: ", T, func)
-
-    return d
-
-
-def setProfileUsage():
+def setProfileUsage() -> tuple[bool, bool]:
     """
     Interface for setting if polynomial and differential data are used in further processing
 
@@ -204,26 +181,7 @@ def setProfileUsage():
     return bool(B[0]), bool(B[1])
 
 
-def setStitching():
-    """
-    Interface for choosing the stitching method
-
-    :return: method string ("usurf", "none", "fft", "var")
-    """
-    SM = 0
-    SM_str = ["usurf", "none", "fft", "var"]
-
-    loopstr = "Stitching Method? " + SM_str[0] + " (0) " + SM_str[1] + " (1) " + SM_str[2] + " (2) " + SM_str[3] + " (3) "
-    func = lambda b: int(b)
-    func2 = lambda b: b if 0 <= b < 4 else 1 / 0
-
-    _, SM = inputLoop(loopstr, SM, func, func2)
-
-    return SM_str[SM]
-
-
-
-def setFiltering(r, prof):
+def setFiltering(r: np.ndarray, prof: np.ndarray) -> tuple[np.ndarray, dict]:
     """
     Interface for profile filtering using the second derivative and filter sections.
     For each iteration the orginal and filtered data is shown, as well as the second derivative.
@@ -238,7 +196,7 @@ def setFiltering(r, prof):
     inp = ""
 
     print("\nEnter Filtering Parameters  F = fc1 fc2 tr n (xb1, xb2, ...). Type \"end\" to exit.")
-    print("(Default: F =", F['fc1'], F['fc2'], F['tr'], F['n'], "). ")
+    print(f"(Default: F = {F}")
     print("fc1: gaussian filter parameter for filtering before differentiation,")
     print("fc2: gaussian filter parameter for filtering after differentiation,")
     print("tr: threshold for section division,", "n: polynomial spline order,")
@@ -252,7 +210,7 @@ def setFiltering(r, prof):
             print("Exception:", str(e))
 
         func = lambda b: list(map(float, b.strip().split()))[:]
-        func2 =  lambda a:  dict(fc1=a[0], fc2=a[1], tr=a[2], n=a[3], xb=a[4:])
+        func2 = lambda a:  dict(fc1=a[0], fc2=a[1], tr=a[2], n=a[3], xb=a[4:])
         inp, F = inputLoop("F = fc1 fc2 tr n (xb1, xb2, ...): ", F, func, func2)
 
     return filtered, F

@@ -2,7 +2,7 @@ from lib.Fitting import *
 import numpy as np
 from scipy.ndimage import gaussian_filter1d as gaussFilter
 
-# Author: Damian Mendroch,
+# Author: Damian Mendroch
 # Project repository: https://github.com/drocheam/miol-reng-tools
 
 """
@@ -10,11 +10,11 @@ Filtering methods
 """
 
 
-def filterProfile(x, y, F):
+def filterProfile(x: np.ndarray, y: np.ndarray, F: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     semi-automatic selective filtering of 1D data. Data is filtered using polynomial splines at regions
     with d^2 y /d x^2 < tr, with tr being a threshold value, otherwise data is copied to output.
-    Addtional regions can be created using the xb array in the F dictionary.
+    Addtional regions can be created using the xb array in the F dictionary
 
     :param x: abscissa values starting at 0 (numpy 1D array)
     :param y: ordinate values (numpy 1D array)
@@ -33,15 +33,15 @@ def filterProfile(x, y, F):
     y_out = y.copy()
 
     # pre- and post-filtering of absolute second derivative
-    dx = x[1] - x[0] # step size
-    y_f = gaussFilter(y, F['fc1']) #filtered curve
-    y2 = np.abs(np.concatenate(([0], np.diff(np.diff(y_f)), [0]))) / dx**2 # abs(d^2 y/dx^2)
-    y2_f = gaussFilter(y2, F['fc2']) # filtered abs(d^2 y/dx^2)
+    dx = x[1] - x[0]  # step size
+    y_f = gaussFilter(y, F['fc1'])  # filtered curve
+    y2 = np.abs(np.concatenate(([0], np.diff(np.diff(y_f)), [0]))) / dx**2  # abs(d^2 y/dx^2)
+    y2_f = gaussFilter(y2, F['fc2'])  # filtered abs(d^2 y/dx^2)
 
     # find section beginnings/endings
-    xal = np.append(y2_f, y2_f[-1]) # left shifted y2_f
-    xar = np.insert(y2_f, 0, y2_f[0]) # right shifted y2_f
-    xa = np.logical_xor(xal > F['tr'], xar > F['tr']).nonzero()[0] # find threshold intersections using xor
+    xal = np.append(y2_f, y2_f[-1])  # left shifted y2_f
+    xar = np.insert(y2_f, 0, y2_f[0])  # right shifted y2_f
+    xa = np.logical_xor(xal > F['tr'], xar > F['tr']).nonzero()[0]  # find threshold intersections using xor
 
     # convert additional sections points from x-values to indices
     xb = np.round(F['xb']/dx).astype(int)
@@ -61,7 +61,7 @@ def filterProfile(x, y, F):
     if xb.shape[0] > 0:
         xbp = np.where(y2_f[xb] > F['tr'])[0]
         if xbp.shape[0] > 0:
-            print("Ignoring section points r =", xb[xbp] * dx, "that lie within ignored region")
+            print(f"Ignoring section points r = {xb[xbp] * dx} that lie within ignored region")
             xb = np.delete(xb, xbp)
 
         # duplicate xb points (we need one value for beginning and ending) and resort the sections
@@ -70,12 +70,12 @@ def filterProfile(x, y, F):
     # section filtering
     for n in np.arange(0, xa.shape[0], 2):
 
-        xan = np.arange(xa[n], xa[n+1]) # n-th section range
-        order = min(xan.shape[0]//4, F['n']) # reduce degree at small sample size
+        xan = np.arange(xa[n], xa[n+1])  # n-th section range
+        order = min(xan.shape[0]//4, F['n'])  # reduce degree at small sample size
 
         if xa[n] == 0:  # ensure dy/dx = 0 at x = 0 by symmetrical polynomial for first section
             s = SymPolyRegression(x[xan], y[xan], order)
-        else: # else normal polynomial
+        else:  # else normal polynomial
             s = PolyRegression(x[xan], y[xan], order)
 
         # write to output
