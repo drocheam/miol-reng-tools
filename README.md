@@ -3,6 +3,10 @@
 
 Repository of the project *Reverse Engineering of Multifocal Intraocular Lenses Using a Confocal Microscope* that was conducted as research seminar at the TH Köln in WS 2020/21.
 
+Measurement and processing results are featured in:<br>
+*Mendroch, D., Altmeyer, S. & Oberheide, U. Characterization of diffractive bifocal intraocular lenses. Sci Rep 13, 908 (2023).* https://doi.org/10.1038/s41598-023-27521-7
+
+
 ### Screenshots
  <img src="https://github.com/drocheam/miol-reng-tools/blob/main/Screenshot2.png" height="220">  <img src="https://github.com/drocheam/miol-reng-tools/blob/main/Screenshot1.png" height="220">  
 
