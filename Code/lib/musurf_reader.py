@@ -188,7 +188,7 @@ def readImages(path, single):
 
         # binary ushort data to numpy float array
         image = data[off+ImHS:off+ImHS+IDS]  # data region
-        image = image[1::2]*256 + image[::2] # ushort to int, ~40x faster than using list() and struct.iter_unpack('<H')
+        image = image[1::2]*256. + image[::2] # ushort to int, ~40x faster than using list() and struct.iter_unpack('<H')
         image = f_low + (f_high - f_low)/(n_high-n_low) * image  # calculate scaled float values
 
         # use intensity to mask out bad values
