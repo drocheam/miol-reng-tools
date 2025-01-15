@@ -1,7 +1,6 @@
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
-import PyQt5 # for plotting backend Qt5Agg
 
 # Author: Damian Mendroch
 # Project repository: https://github.com/drocheam/miol-reng-tools
@@ -11,8 +10,6 @@ import PyQt5 # for plotting backend Qt5Agg
 Plotting functions
 """
 
-# enforce plotting backend to show plots interactive and in separate windows
-matplotlib.use('Qt5Agg')
 
 # better fonts to make everything look more professional
 matplotlib.rcParams['mathtext.fontset'] = 'stix'
