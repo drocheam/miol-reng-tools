@@ -222,7 +222,7 @@ def getShiftFFT(Image1: np.ndarray, Image2: np.ndarray, sr: int=40, debug: bool=
     valid = k_x.shape[0] == 1 and np.max(Vfc) > np.mean(Vf) + 6*np.std(Vf)
 
     if valid:
-        v_y, v_x = np.int(sr - k_y), np.int(k_x - sr)  # calculate shift values from coordinates
+        v_y, v_x = int(sr - k_y), int(k_x - sr)  # calculate shift values from coordinates
     else:
         v_y, v_x = 0, 0 # default shift
 
